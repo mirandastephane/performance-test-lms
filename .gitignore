@@ -2,3 +2,5 @@
 /results/
 
 
+!/package-lock.json
+!/package.json

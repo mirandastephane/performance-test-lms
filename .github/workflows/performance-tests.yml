@@ -25,7 +25,7 @@ jobs:
       # 4. Run performance test with k6 and save results
       - name: Run K6 Performance Test
         run: |
-          k6 run scripts/load-test.js --out json=k6-results/results.json
+          k6 run scripts/load-test.js --out json=results/results.json
 
       # 5. Publish k6 results as GitHub Actions artifacts
       - name: Upload K6 Results

@@ -7,14 +7,29 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # 1. Checkout the code from the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Install K6
+      # 2. Install K6 (for performance testing)
+      - name: Install K6 via Snap
         run: |
-          sudo apt update
-          sudo apt install -y k6
+          sudo apt-get update
+          sudo apt-get install -y snapd
+          sudo snap install k6
 
-      - name: Run performance tests
+      # 3. Create directory for k6 results
+      - name: Create k6 results directory
+        run: mkdir -p results
+
+      # 4. Run performance test with k6 and save results
+      - name: Run K6 Performance Test
         run: |
-          k6 run performance-test-lms/scripts/load-test.js
+          k6 run performance-test-lms/scripts/load-test.js --out json=k6-results/results.json
+
+      # 5. Publish k6 results as GitHub Actions artifacts
+      - name: Upload K6 Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: k6-results
+          path: ./k6-results/

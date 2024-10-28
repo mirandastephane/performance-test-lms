@@ -61,6 +61,11 @@ To run a long-duration soak test:
 ```bash
 k6 run performance-test-lms/scripts/soak-test.js
 ```
+### Running a Page Load Test
+To run the page load test, execute:
+```bash
+k6 run performance-test-lms/scripts/page-load-test.js
+```
 
 ### Saving Test Results with Shell Script
 A shell script, `run-k6-load-test.sh`, has been provided to automate the process of saving test results into a directory named with the current date and time of execution. This helps to easily organize and archive results for future analysis.

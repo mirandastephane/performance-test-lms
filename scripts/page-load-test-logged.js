@@ -2,16 +2,16 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export const options = {
-    vus: 10,            // Número de usuários virtuais
-    duration: '30s',    // Duração do teste
+    vus: 10,            // Number of virtual users
+    duration: '30s',    // Duration of the test
 };
 
 const BASE_URL = 'https://learn.liferay.com';
-let responseTimes = {}; // Inicializa um objeto para armazenar os tempos de resposta
+let responseTimes = {}; // Initializes an object to store response times
 
-// Função principal de teste
+// Main test function
 export default function () {
-    // Configura os cabeçalhos necessários
+    // Sets up the necessary headers
     const headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'accept-language': 'en-US,en;q=0.9,pt;q=0.8',
@@ -30,18 +30,18 @@ export default function () {
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
     };
 
-    // Realiza a requisição GET
+    // Makes the GET request
     const response = http.get(`${BASE_URL}/user-dashboard`, { headers });
 
-    // Armazena o tempo de resposta
+    // Stores the response time
     const time = response.timings.duration;
     const path = '/user-dashboard';
     if (!responseTimes[path]) {
-        responseTimes[path] = []; // Inicializa um array para o caminho se não existir
+        responseTimes[path] = []; // Initializes an array for the path if it doesn't exist
     }
-    responseTimes[path].push(time); // Adiciona o tempo de resposta ao array
+    responseTimes[path].push(time); // Adds the response time to the array
 
-    // Verifica o status da resposta
+    // Checks the response status
     check(response, {
         'status is 200': (r) => r.status === 200,
         'response time is less than 2000ms': (r) => time < 2000,
@@ -51,8 +51,6 @@ export default function () {
         console.log(`Warning: ${response.url} took ${time.toFixed(2)} ms to load.`);
     }
 
-    // Aguarda um segundo antes de repetir
+    // Waits for one second before repeating
     sleep(1);
 }
-
-

@@ -12,9 +12,9 @@ const responseTime = new Trend('response_time_dashboard');
 
 export let options = {
     stages: [
-        { duration: '30s', target: 10 }, // Start with 10 users
-        { duration: '30s', target: 20 }, // Ramp up to 20 users
-        { duration: '30s', target: 0 },  // End the test
+        { duration: '1m', target: 10 }, // Start with 10 users
+        { duration: '2m', target: 20 }, // Ramp up to 20 users
+        { duration: '1m', target: 0 },  // End the test
     ],
 };
 
